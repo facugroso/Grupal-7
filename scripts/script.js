@@ -6,16 +6,22 @@ const modal = document.getElementById("dataModal")
 const BOTON_BORRAR = document.getElementById("btnDelete")
 let userarray = []
 
+document.addEventListener("DOMContentLoaded", ()=> {
+  fetch(API_URL + "users/" + document.getElementById("inputGet1Id").value, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
 
-const listData = () => {
-  fetch(API_URL)
+  })
     .then((response) => response.json())
-    .then((data) => {
-      showListData(data);
+    .then((dataResponse) => {
+      console.log(dataResponse);
+      userarray = dataResponse
     })
-    .catch((error) => alert("Ocurrió un error"));
-};
-listData();
+    .catch((error) => {
+      console.log(error);
+      alert("Ocurrió un error");
+    });
+});
 
 boton_buscar.addEventListener("click", () => {
   fetch(API_URL + "users/" + document.getElementById("inputGet1Id").value, {
@@ -28,6 +34,7 @@ boton_buscar.addEventListener("click", () => {
       console.log(dataResponse);
       userarray = dataResponse
       if (Array.isArray(dataResponse)) showusers(dataResponse)
+      else{showusers2(dataResponse)}
     })
     .catch((error) => {
       console.log(error);
@@ -49,6 +56,8 @@ BOTON_CREAR.addEventListener("click", () => {
     .then((response) => response.json())
     .then((dataResponse) => {
       console.log(dataResponse);
+      showusers(userarray)
+      showusers2(dataResponse)
     })
     .catch((error) => {
       console.log(error);
@@ -119,6 +128,6 @@ function showusers(userarray) {
 }
 
 function showusers2 (userarray){
-  document.getElementById("results").innerHTML = `${id} ${name} ${lastname}`;
+  let users= userarray
+  document.getElementById("results").innerHTML = `${users.id} ${users.name} ${users.lastname}`;
 }
-
