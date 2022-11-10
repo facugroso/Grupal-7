@@ -23,17 +23,17 @@ boton_buscar.addEventListener("click", () => {
       headers: { "Content-Type": "application/json" },
       
      })
-    
+     
       .then((response) => response.json())
       .then((dataResponse) => {
         console.log(dataResponse);
         userarray=dataResponse
+        showusers();
       })
       .catch((error) => {
         console.log(error);
         alert("Ocurrió un error");
       });
-      showusers()
   });
 
   BOTON_CREAR.addEventListener("click", () => {
@@ -85,7 +85,7 @@ fetch(API_URL+ "users/" + document.getElementById("inputPutId").value , {
           body: JSON.stringify({
             name: document.getElementById("inputPostNombre").value,
             lastname:document.getElementById("inputPostApellido").value,
-            
+             
             
          })
         })
